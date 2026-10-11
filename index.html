@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Confirmação de e-mail | Global Airsoft</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#07100a;color:#f4f7f2;font-family:system-ui,sans-serif}main{max-width:480px;width:100%;padding:36px 28px;border:1px solid #26352a;border-top:4px solid #b7ff21;border-radius:22px;background:#101a13;text-align:center}.brand{font-size:24px;font-weight:900;letter-spacing:1px}.brand span{color:#b7ff21}.icon{margin:28px auto 18px;font-size:44px;color:#b7ff21}h1{font-size:26px}p{color:#b3bfb5;line-height:1.7}.note{font-size:14px;margin-top:26px}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">GLOBAL <span>AIRSOFT</span></div>
+    <div class="icon" id="icon" aria-hidden="true">✓</div>
+    <h1 id="title">E-mail confirmado!</h1>
+    <p id="message">Volte ao aplicativo Global Airsoft e entre com seu e-mail e senha.</p>
+    <p class="note">Sua próxima partida começa aqui.</p>
+  </main>
+  <script>
+    // Supabase validates the email link before redirecting here.
+    // Remove auth tokens from the address; this page does not store a session.
+    const fragment = new URLSearchParams(location.hash.slice(1));
+    const query = new URLSearchParams(location.search);
+    const failed = fragment.has('error') || fragment.has('error_code') || query.has('error') || query.has('error_code');
+    history.replaceState(null, '', location.pathname);
+    if (failed) {
+      document.getElementById('icon').textContent = '!';
+      document.getElementById('title').textContent = 'Não foi possível confirmar';
+      document.getElementById('message').textContent = 'O link pode ter expirado ou já ter sido usado. Tente entrar no aplicativo; se ainda faltar a confirmação, solicite um novo e-mail.';
+    }
+  </script>
+</body>
+</html>
